@@ -25,4 +25,8 @@ def timesheet():
 @app.route('/account')
 def account():
     return render_template('account.html', title='Account')
-
+#-------------------------------------------------------------
+@app.route('/')
+@app.route('/logout')
+def account():
+    return render_template('logout.html', title='Logout')

@@ -28,5 +28,6 @@ def account():
 #-------------------------------------------------------------
 @app.route('/')
 @app.route('/logout')
-def account():
-    return render_template('logout.html', title='Logout')
+def logout():
+	logout_user()
+	return redirect(url_for('login'))

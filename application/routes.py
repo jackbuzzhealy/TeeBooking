@@ -5,7 +5,8 @@ from application.models import Golfer, TimeSlots, Booking, BookingLine
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('home.html', title='Home')
+    Golfers = Golfer.query.all()
+    return render_template('home.html', title='Home', Golfers=Golfers)
 #--------------------------------------------------------
 @app.route('/')
 @app.route('/login')

@@ -1,8 +1,11 @@
 {% extends 'layout.html' %}
 {% block body_content %}
-    {% for golfer in golfers %}
-        <div>
-            
-        </div>
-    {% endfor %}
+     <h1>{{ title }}</h1>
+   	 {% for golfer in Golfers %}
+       		 <div>
+			<h3>{{ golfer.email }}</h3> 
+		        <h3>{{ golfer.foreName }}</h3>
+			<h3>{{ golfer.secondName }}</h3>           
+       		 </div>
+   	 {% endfor %}
 {% endblock %}

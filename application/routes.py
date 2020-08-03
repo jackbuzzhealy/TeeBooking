@@ -1,5 +1,6 @@
 from flask import render_template
-from application import app
+from application import app, db
+from application.models import Golfer, TimeSlots, Booking, BookingLine
 
 @app.route('/')
 @app.route('/home')

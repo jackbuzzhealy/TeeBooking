@@ -21,7 +21,8 @@ def register():
 @app.route('/')
 @app.route('/timesheet')
 def timesheet():
-    return render_template('timesheet.html', title='Timesheet')
+    times = TimeSlots.query.all()
+    return render_template('timesheet.html', title='Timesheet', times=times)
 #-------------------------------------------------------------
 @app.route('/')
 @app.route('/account')

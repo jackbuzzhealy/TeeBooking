@@ -47,21 +47,19 @@ def register():
 
 	return render_template('register.html', title='Register', form=form)
 #-------------------------------------------------------------
-@app.route('/')
-@login_required
 @app.route('/timesheet')
+@login_required
 def timesheet():
     times = TimeSlots.query.all()
     return render_template('timesheet.html', title='Timesheet', times=times)
 #-------------------------------------------------------------
-@app.route('/')
-@login_required
 @app.route('/account')
+@login_required
 def account():
     return render_template('account.html', title='Account')
 #-------------------------------------------------------------
-@app.route('/')
 @app.route('/logout')
+@login_required
 def logout():
 	logout_user()
 	return redirect(url_for('login'))

@@ -11,7 +11,7 @@ class RegistrationForm(FlaskForm):
             Email()
         ]
     )
-    foreName = StringField('First Name',
+    firstName = StringField('First Name',
 	validators = [
             DataRequired()
         ]
@@ -35,7 +35,7 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Register')
 
     def validate_email(self, email):
-        user = golfers.query.filter_by(email=email.data).first()
+        user = Golfer.query.filter_by(email=email.data).first()
 
         if user:
             raise ValidationError('Email already in use')

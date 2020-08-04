@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, request
 from flask_login import login_user, current_user, logout_user, login_required
 from application.forms import RegistrationForm, LoginForm
-from application import app, db
+from application import app, db, bcrypt
 from application.models import Golfer, TimeSlots, Booking, BookingLine
 
 @app.route('/')
@@ -16,7 +16,7 @@ def login():
 		return redirect(url_for('home'))
 	form = LoginForm()
 	if form.validate_on_submit():
-		user = Users.query.filter_by(email=form.email.data).first()
+		user = Golfer.query.filter_by(email=form.email.data).first()
 		if user and bcrypt.check_password_hash(user.password, form.password.data):
 			login_user(user, remember=form.remember.data)
 			next_page = request.args.get('next')
@@ -33,8 +33,8 @@ def register():
 	form = RegistrationForm()
 	if form.validate_on_submit():
 		hash_pw = bcrypt.generate_password_hash(form.password.data)
-		user = Users(
-			firstName=form.firstName.data,
+		user = Golfer(
+			foreName=form.firstName.data,
 			secondName=form.secondName.data,
 			email=form.email.data,
 			password=hash_pw

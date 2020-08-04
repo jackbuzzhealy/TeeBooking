@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, request
 from flask_login import login_user, current_user, logout_user, login_required
-from application.forms import PostForm, RegistrationForm, LoginForm
+from application.forms import RegistrationForm, LoginForm
 from application import app, db
 from application.models import Golfer, TimeSlots, Booking, BookingLine
 

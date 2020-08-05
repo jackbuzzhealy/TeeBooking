@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 {% block body_content %}
-<h1>Register Page</h1>
-    <p>Need an account? Sign up</p>
+<h1>Register</h1>
     <div class='form'>
         <form method='POST' action=''>
             {{ form.hidden_tag() }}
@@ -28,6 +27,7 @@
                 </div>
                 {% endif %}
             </div>
+	    <br>
             <div class='form_group'>
                 {{ form.email.label }}
                 {{ form.email }}

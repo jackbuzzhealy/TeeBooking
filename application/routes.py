@@ -48,7 +48,6 @@ def register():
 	return render_template('register.html', title='Register', form=form)
 #-------------------------------------------------------------
 @app.route('/timesheet')
-@login_required
 def timesheet():
     times = TimeSlots.query.all()
     return render_template('timesheet.html', title='Timesheet', times=times)

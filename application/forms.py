@@ -10,7 +10,7 @@ def slotQuery():
     return TimeSlots.query.all()
 
 class bookingForm(FlaskForm):
-    options = QuerySelectField(query_factory=slotQuery, allow_blank=True)        
+    options = QuerySelectField(query_factory=slotQuery)        
 
 class RegistrationForm(FlaskForm):
     email = StringField('Email',

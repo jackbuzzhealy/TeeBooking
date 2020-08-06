@@ -1,5 +1,6 @@
 from application import db, login_manager
 from flask_login import UserMixin
+import datetime
 
 @login_manager.user_loader
 def load_user(id):
@@ -22,7 +23,8 @@ class TimeSlots(db.Model):
 class Booking(db.Model):
      bookingID = db.Column(db.Integer, primary_key=True, autoincrement=True)
      golferID  = db.Column(db.Integer, db.ForeignKey('golfer.id'), nullable=False)
-
+     date = db.Column(db.DateTime, nullable=False)
+     
 class BookingLine(db.Model):
      lineID = db.Column(db.Integer, primary_key=True, autoincrement=True)
      bookingID = db.Column(db.Integer, db.ForeignKey('booking.bookingID'), nullable=False)

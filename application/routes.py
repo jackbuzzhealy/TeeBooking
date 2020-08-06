@@ -6,7 +6,9 @@ from application.models import Golfer, TimeSlots, Booking, BookingLine
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms_sqlalchemy.fields import QuerySelectField
-import sys 
+from flask_login import current_user
+import sys
+import datetime
 #-------------------------------------------------------
 @app.route('/')
 @app.route('/home')
@@ -47,7 +49,7 @@ def register():
 		db.session.add(user)
 		db.session.commit()
 
-		return redirect(url_for('account'))
+		return redirect(url_for('home'))
 
 	return render_template('register.html', title='Register', form=form)
 #-------------------------------------------------------------
@@ -61,7 +63,21 @@ def timesheet():
 def createBooking():
     form = bookingForm()
     if form.validate_on_submit():
-       return '<html><h1>{}</h1></html>'.format(form.options.data)
+       golfer = Golfer.query.filter_by(email=current_user.email).first()
+       golferID = golfer.id
+       slot = TimeSlots.query.filter_by(slot=str(form.options.data)).first()
+       slotID = slot.timeID
+       dateTime = datetime.datetime.now()
+
+       booking = Booking(golferID=golferID, date=dateTime)
+       db.session.add(booking)
+       db.session.commit()
+
+       bookingID = booking.bookingID
+       line = BookingLine(bookingID=bookingID, timeID=slotID)
+       db.session.add(line)
+       db.session.commit()
+
     return render_template('createBooking.html', title='Create Booking', form=form)
 #-------------------------------------------------------------
 @app.route('/deleteBooking')

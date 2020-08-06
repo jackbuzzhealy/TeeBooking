@@ -3,6 +3,14 @@ from wtforms import StringField, SubmitField, PasswordField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from application.models import Golfer, TimeSlots, Booking, BookingLine
 from flask_login import current_user
+from flask_sqlalchemy import SQLAlchemy
+from wtforms_sqlalchemy.fields import QuerySelectField
+
+def slotQuery():
+    return TimeSlots.query.all()
+
+class bookingForm(FlaskForm):
+    options = QuerySelectField(query_factory=slotQuery)        
 
 class RegistrationForm(FlaskForm):
     email = StringField('Email',

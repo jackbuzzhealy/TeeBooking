@@ -5,7 +5,9 @@
 		{% if current_user.is_authenticated %}
 			<a href="{{ url_for('home') }}">Home</a>
 			<a href="{{ url_for('logout') }}">Logout</a>	
-		        <a href="{{ url_for('account') }}">Account</a>
+		        <a href="{{ url_for('createBooking') }}">Create Booking</a>
+			<a href="{{ url_for('deleteBooking') }}">Delete Booking</a>
+			<a href="{{ url_for('updateBooking') }}">Update Booking</a>
       			<a href="{{ url_for('timesheet') }}">Timesheet</a>
 		{% else %}
 			<a href="{{ url_for('home') }}">Home</a>

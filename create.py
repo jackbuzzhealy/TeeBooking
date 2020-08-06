@@ -4,7 +4,7 @@ from application.models import Golfer, TimeSlots
 db.drop_all()
 db.create_all()
 
-golfer1 = Golfer(email="joebloggs@mail.com", foreName="Joe", secondName="Bloggs", password=bcrypt.generate_password_hash("password"))
+golfer1 = Golfer(email="healy@mail.com", foreName="Jack", secondName="Healy", password=bcrypt.generate_password_hash("password"))
 db.session.add(golfer1)
 
 time1 = TimeSlots(slot="07:00")

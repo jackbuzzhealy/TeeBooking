@@ -15,6 +15,9 @@ class Golfer(db.Model, UserMixin):
 class TimeSlots(db.Model):
     timeID = db.Column(db.Integer, primary_key=True)
     slot = db.Column(db.String(25), nullable=False)
+    
+    def __repr__(self):
+        return format(self.slot)
 
 class Booking(db.Model):
      bookingID = db.Column(db.Integer, primary_key=True, autoincrement=True)

@@ -1,9 +1,13 @@
 from flask import render_template, redirect, url_for, request
 from flask_login import login_user, current_user, logout_user, login_required
-from application.forms import RegistrationForm, LoginForm
+from application.forms import RegistrationForm, LoginForm, bookingForm
 from application import app, db, bcrypt
 from application.models import Golfer, TimeSlots, Booking, BookingLine
-
+from flask_sqlalchemy import SQLAlchemy
+from flask_wtf import FlaskForm
+from wtforms_sqlalchemy.fields import QuerySelectField
+import sys 
+#-------------------------------------------------------
 @app.route('/')
 @app.route('/home')
 def home():
@@ -47,15 +51,28 @@ def register():
 
 	return render_template('register.html', title='Register', form=form)
 #-------------------------------------------------------------
-@app.route('/timesheet')
+@app.route('/timesheet', methods=['GET','POST'])
 def timesheet():
     times = TimeSlots.query.all()
     return render_template('timesheet.html', title='Timesheet', times=times)
 #-------------------------------------------------------------
-@app.route('/account')
+@app.route('/createBooking', methods=['GET','POST'])
 @login_required
-def account():
-    return render_template('account.html', title='Account')
+def createBooking():
+    form = bookingForm()
+    if form.validate_on_submit():
+       return '<html><h1>{}</h1></html>'.format(form.options.data)
+    return render_template('createBooking.html', title='Create Booking', form=form)
+#-------------------------------------------------------------
+@app.route('/deleteBooking')
+@login_required
+def deleteBooking():
+    return render_template('deleteBooking.html', title='Delete Booking')
+#-------------------------------------------------------------
+@app.route('/updateBooking')
+@login_required
+def updateBooking():
+    return render_template('updateBooking.html', title='update Booking')
 #-------------------------------------------------------------
 @app.route('/logout')
 @login_required

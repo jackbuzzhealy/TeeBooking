@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 {% block body_content %}
         <h1>{{ title }}</h1>
+	<h2>Select an available time slot and then submit</h2>
         <br>
         <form action='' method="POST">
        		{{ form.csrf_token  }}

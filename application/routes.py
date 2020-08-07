@@ -80,7 +80,7 @@ def createBooking():
 
     return render_template('createBooking.html', title='Create Booking', form=form)
 #-------------------------------------------------------------
-@app.route('/deleteBooking')
+@app.route('/deleteBooking', methods=["GET", "POST"])
 @login_required
 def deleteBooking():
     return render_template('deleteBooking.html', title='Delete Booking')
@@ -88,8 +88,37 @@ def deleteBooking():
 @app.route('/updateBooking')
 @login_required
 def updateBooking():
-    return render_template('updateBooking.html', title='update Booking')
+    return render_template('updateBooking.html', title='Update Booking')
 #-------------------------------------------------------------
+@app.route('/account')
+@login_required
+def account():
+    golfer = Golfer.query.filter_by(email=current_user.email).first()
+    
+    golferID = golfer.id
+    golferForeName = golfer.foreName
+    golferSecondName = golfer.secondName
+
+    qryBookings = Booking.query.filter_by(golferID=golferID).all()
+    timeIDs  = []
+    for i in qryBookings:
+        bookingIDs = i.bookingID
+        qryBookingID = BookingLine.query.filter_by(bookingID=bookingIDs).all()
+        for i in qryBookingID:
+            id = i.timeID
+            timeIDs.append(id)
+
+    times = []
+    for i in timeIDs:
+        timeIDs = i
+        qryTimes = TimeSlots.query.filter_by(timeID=timeIDs).all()
+        for i in qryTimes:
+            slot = i.slot
+            times.append(slot)
+            
+
+    return render_template('account.html', title='Account', ID=str(golferID), foreName=golferForeName, secondName=golferSecondName, times=times)
+#--------------------------------------------------------------
 @app.route('/logout')
 @login_required
 def logout():

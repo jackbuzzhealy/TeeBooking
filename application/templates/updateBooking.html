@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+{% block body_content %}
+        <h1>{{ title }}</h1>
+        <h2>Select a time slot to change</h2>
+        <br>
+        <form action='' method="POST">
+                {{ oldTimeForm.csrf_token }}
+                {{ oldTimeForm.options }}
+                <ul>
+                        {%for error in oldTimeForm.options.errors%}
+                                <li>{{error}}<li>
+                        {% endfor %}
+                </ul>
+		<br>	
+	</form>
+	<h2>Select New Time</h2>
+	<form action='' method="POST">	
+		{{ newTimeForm.csrf_token }}
+	        {{ newTimeForm.options }}
+                <ul>
+                        {%for error in newTimeForm.options.errors%}
+                                <li>{{error}}<li>
+                        {% endfor %}
+                 </ul>
+                 <br>
+                 <input type="submit">
+        </form>
+{% endblock %}

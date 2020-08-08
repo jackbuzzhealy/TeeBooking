@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, request
 from flask_login import login_user, current_user, logout_user, login_required
-from application.forms import RegistrationForm, LoginForm, bookingForm
+from application.forms import RegistrationForm, LoginForm, bookingForm, deleteForm
 from application import app, db, bcrypt
 from application.models import Golfer, TimeSlots, Booking, BookingLine
 from flask_sqlalchemy import SQLAlchemy
@@ -13,8 +13,7 @@ import datetime
 @app.route('/')
 @app.route('/home')
 def home():
-    Golfers = Golfer.query.all()
-    return render_template('home.html', title='Home', Golfers=Golfers)
+    return render_template('home.html', title='Home')
 #--------------------------------------------------------
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -80,10 +79,21 @@ def createBooking():
 
     return render_template('createBooking.html', title='Create Booking', form=form)
 #-------------------------------------------------------------
-@app.route('/deleteBooking', methods=["GET", "POST"])
+@app.route('/deleteBooking', methods=['GET','POST'])
 @login_required
 def deleteBooking():
-    return render_template('deleteBooking.html', title='Delete Booking')
+    form = deleteForm()
+    if form.validate_on_submit():
+        slot = TimeSlots.query.filter_by(slot=str(form.options.data)).first()
+        line =  BookingLine.query.filter_by(timeID=slot.timeID).first()
+        booking = Booking.query.filter_by(bookingID=line.bookingID).first()
+        db.session.delete(line)
+        db.session.commit()
+        db.session.delete(booking)
+        db.session.commit()
+        return redirect(url_for('home'))
+
+    return render_template('deleteBooking.html', title='Delete Booking', form=form)
 #-------------------------------------------------------------
 @app.route('/updateBooking')
 @login_required

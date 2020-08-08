@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+{% block body_content %}
+        <h1>{{ title }}</h1>
+        <h2>Select a booking to delete and submit it</h2>
+        <br>
+        <form action='' method="POST">
+		{{ form.csrf_token  }}
+                {{ form.options  }}
+		<ul>
+			{% for option in form.options.errors %}
+  				<li>{{ option }}</li>
+  			{% endfor %}
+		</ul>
+                
+             
+                 
+        	<input type="submit">
+        </form>
+{% endblock %}

@@ -95,10 +95,37 @@ def deleteBooking():
 
     return render_template('deleteBooking.html', title='Delete Booking', form=form)
 #-------------------------------------------------------------
-@app.route('/updateBooking')
+@app.route('/updateBooking', methods=['GET','POST'])
 @login_required
 def updateBooking():
-    return render_template('updateBooking.html', title='Update Booking')
+    oldTimeForm  = deleteForm()
+    newTimeForm = bookingForm()
+    oldTime = str(oldTimeForm.options.data)
+    newTime = ""
+    
+    if newTimeForm.validate_on_submit() and  oldTime != "":
+       newTime = str(newTimeForm.options.data)
+       golfer = Golfer.query.filter_by(email=current_user.email).first()
+       golferID = golfer.id
+       qryBookings = Booking.query.filter_by(golferID=golferID).all()
+       
+       bookingIDs = []
+       times = []
+       for i in qryBookings:
+           id = i.bookingID
+           bookingIDs.append(id)
+           for i in bookingIDs:
+               qryLines = BookingLine.query.filter_by(bookingID=i).all()
+               for i in qryLines:
+                   time = i.timeID
+                   times.append(time)
+        
+       qryNewTimeID = TimeSlots.query.filter_by(slot=newTime).first()
+       qryUpdating = BookingLine.query.filter_by(timeID=oldTime).first()
+       qryUpdating.timeID = qryNewTimeID.timeID
+       db.session.commit()
+
+    return render_template('updateBooking.html', title='Update Booking', oldTimeForm=oldTimeForm, newTimeForm=newTimeForm)
 #-------------------------------------------------------------
 @app.route('/account')
 @login_required

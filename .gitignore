@@ -2,3 +2,4 @@
 /application/__pycache__
 /venv
 *.pyc
+/htmlcov

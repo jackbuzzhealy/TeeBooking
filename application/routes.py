@@ -127,7 +127,7 @@ def updateBooking():
 
     return render_template('updateBooking.html', title='Update Booking', oldTimeForm=oldTimeForm, newTimeForm=newTimeForm)
 #-------------------------------------------------------------
-@app.route('/account')
+@app.route('/account', methods=['GET','POST'])
 @login_required
 def account():
     golfer = Golfer.query.filter_by(email=current_user.email).first()
